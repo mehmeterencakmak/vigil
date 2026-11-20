@@ -17,6 +17,10 @@ jobs:
       - run: bun run lint
       - run: bun run typecheck
       - run: bun test
+      # A Next.js build can fail where `tsc` passes (#267). `bun --cwd apps/web run build` prints
+      # the help text and exits 0, so the flag has to come after `run`.
+      - name: Build apps/web
+        run: bun run --cwd apps/web build
 
   # Golden dataset and other raw-file tests (#128, decision 0007). The raw KAP files are not in the
   # repository: the files listed in tests/raw_files.txt are downloaded from KAP and cached, so KAP is
